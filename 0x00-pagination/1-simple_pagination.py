@@ -47,7 +47,8 @@ class Server:
             indexes = index_range(page, page_size)
 
             data = self.dataset()
-            if (page > len(data)/page_size):
+            """ The inputs are out of range """
+            if (page > math.ceil(len(data)/page_size)):
                  return []
 
             return data[indexes[0]: indexes[1]]
