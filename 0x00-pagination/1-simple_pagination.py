@@ -12,9 +12,6 @@ def index_range(page: int, page_size: int) -> Tuple[int, int]:
     first_element = last_element - page_size
     return (first_element, last_element)
 
-if __name__ == "__main__":
-    print(index_range(8, 9))
-
 
 class Server:
     """Server class to paginate a database of popular baby names.
@@ -36,19 +33,25 @@ class Server:
         return self.__dataset
 
     def get_page(self, page: int = 1, page_size: int = 10) -> List[List]:
-            """ This method is going to return the page a list of thing """
-            assert isinstance(page, int) and page > 0, AssertionError('AssertionError raised with negative values')
-            assert isinstance(page_size, int) and page_size > 0, AssertionError('AssertionError raised with negative values')
-            if page == 0:
-                 raise AssertionError('AssertionError raised with 0')
-            elif isinstance(page_size, int) is False:
-                raise AssertionError('AssertionError raised when page and/or page_size are not ints')
+        """ This method is going to return the page a list of thing """
+        ng_msg = 'AssertionError raised with negative values'
+        page_is_int = isinstance(page, int)
+        size_is_int = isinstance(page_size, int)
+        assert page_is_int and page > 0, AssertionError(ng_msg)
+        assert size_is_int and page_size > 0, AssertionError(ng_msg)
+        if page == 0:
+            raise AssertionError('AssertionError raised with 0')
+        elif isinstance(page_size, int) is False:
+            msg = """
+            AssertionError raised when page and/or page_size are not ints
+            """
+            raise AssertionError(msg)
 
-            indexes = index_range(page, page_size)
+        indexes = index_range(page, page_size)
 
-            data = self.dataset()
-            """ The inputs are out of range """
-            if (page > math.ceil(len(data)/page_size)):
-                 return []
+        data = self.dataset()
+        """ The inputs are out of range """
+        if (page > math.ceil(len(data)/page_size)):
+            return []
 
-            return data[indexes[0]: indexes[1]]
+        return data[indexes[0]: indexes[1]]
