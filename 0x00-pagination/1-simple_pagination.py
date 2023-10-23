@@ -37,10 +37,9 @@ class Server:
 
     def get_page(self, page: int = 1, page_size: int = 10) -> List[List]:
             """ This method is going to return the page a list of thing """
-
-            if page < 0:
-                 raise AssertionError('AssertionError raised with negative values')
-            elif page == 0:
+            assert isinstance(page, int) and page > 0, AssertionError('AssertionError raised with negative values')
+            assert isinstance(page_size, int) and page_size > 0, AssertionError('AssertionError raised with negative values')
+            if page == 0:
                  raise AssertionError('AssertionError raised with 0')
             elif isinstance(page_size, int) is False:
                 raise AssertionError('AssertionError raised when page and/or page_size are not ints')
