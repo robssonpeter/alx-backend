@@ -23,7 +23,7 @@ class LRUCache(BaseCaching):
                     """ Remove the first item """
                     keys = list(self.cache_data.keys())
                     first_key = keys[0]
-                    print(f"DISCARD {first_key}")
+                    print(f"DISCARD: {first_key}")
                     del self.cache_data[first_key]
                     self.cache_data[key] = item
             else:
