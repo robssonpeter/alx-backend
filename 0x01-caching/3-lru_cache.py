@@ -13,7 +13,7 @@ class LRUCache(BaseCaching):
             Its quite interesting here
         """
         if key is not None and item is not None:
-            
+
             keys = list(self.cache_data.keys())
             deleted = False
             if key in self.cache_data.keys():
