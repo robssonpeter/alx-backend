@@ -13,22 +13,21 @@ class LRUCache(BaseCaching):
             Its quite interesting here
         """
         if key is not None and item is not None:
-
-            keys = list(self.cache_data.keys())
-            deleted = False
-            if key in self.cache_data.keys():
-                del self.cache_data[key]
-                deleted = True
-            self.cache_data[key] = item
             keys = list(self.cache_data.keys())
             if len(keys) >= self.MAX_ITEMS:
-                """ Remove the last element """
-                last_key = keys[len(keys) - 1]
-                """Remove only if the key is not there """
-                if not deleted:
-                    print(f'DISCARD: {last_key}')
-                    del self.cache_data[last_key]
-            self.cache_data[key] = item
+                if key in keys:
+                    value = self.cache_data[key]
+                    del self.cache_data[key]
+                    self.cache_data[key] = value
+                else:
+                    """ Remove the first item """
+                    keys = list(self.cache_data.keys())
+                    first_key = keys[0]
+                    print(f"DISCARD {first_key}")
+                    del self.cache_data[first_key]
+                    self.cache_data[key] = item
+            else:
+                self.cache_data[key] = item
 
     def get(self, key):
         """ The function to retrieve a certain key from cache"""
