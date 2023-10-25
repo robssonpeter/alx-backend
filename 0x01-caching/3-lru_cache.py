@@ -18,7 +18,7 @@ class LRUCache(BaseCaching):
                 if key in keys:
                     value = self.cache_data[key]
                     del self.cache_data[key]
-                    self.cache_data[key] = value
+                    self.cache_data[key] = item
                 else:
                     """ Remove the first item """
                     keys = list(self.cache_data.keys())
