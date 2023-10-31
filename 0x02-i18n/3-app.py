@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
+""" The entry file for the web application """
 from flask import Flask
 import flask
 from flask_babel import Babel, gettext
 from flask import request
 from typing import Union
-
-""" The entry file for the web application """
 
 
 app = Flask(__name__, template_folder="templates/")
