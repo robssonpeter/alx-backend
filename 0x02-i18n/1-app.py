@@ -5,8 +5,8 @@ from flask_babel import Babel
 """ The entry file for the web application """
 
 
-app = Flask(__name__, template_folder="templates/",)
-babel = Babel(app, loca)
+app = Flask(__name__, template_folder="templates/")
+babel = Babel(app)
 
 
 class Config:
