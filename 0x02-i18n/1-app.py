@@ -24,7 +24,9 @@ def home() -> str:
 
 if __name__ == "__main__":
     config = Config()
-    babel = Babel(app, config)
+    locale = config.default_locale
+    zone = config.default_timezone
+    babel = Babel(app, default_locale=locale, default_timezone=zone)
     """babel.default_locale = config.default_locale
     babel.default_timezone = config.default_timezone"""
     app.run()
