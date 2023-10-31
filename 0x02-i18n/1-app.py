@@ -6,17 +6,15 @@ from flask_babel import Babel
 
 
 app = Flask(__name__, template_folder="templates/")
-babel = Babel(app)
 
 
 class Config:
     LANGUAGES = ["en", "fr"]
 
     def __init__(self, locale = "en", timezone="UTC") -> None:
-        babel.default_locale = locale
-        babel.default_timezone = timezone
+        self.default_locale = locale
+        self.default_timezone = timezone
 
-config = Config()
 
 @app.route('/')
 def home() -> str:
@@ -25,4 +23,8 @@ def home() -> str:
 
 
 if __name__ == "__main__":
+    config = Config()
+    babel = Babel(app, config)
+    """babel.default_locale = config.default_locale
+    babel.default_timezone = config.default_timezone"""
     app.run()
