@@ -1,5 +1,7 @@
+#!/usr/bin/env python3
 from flask import Flask
 import flask
+""" The entry file for the web application """
 
 app = Flask(__name__, template_folder="templates/")
 
