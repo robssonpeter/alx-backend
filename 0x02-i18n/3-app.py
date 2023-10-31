@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 from flask import Flask
 import flask
-from flask_babel import Babel
+from flask_babel import Babel, gettext
 from flask import request
 from typing import Union
+import jinja2
 
 """ The entry file for the web application """
 
@@ -21,13 +22,21 @@ babel = Babel(app)
 
 @babel.localeselector
 def get_locale() -> Union[str, None]:
+    return 'fr'
     """ The function to return the best match of the lang """
     return request.accept_languages.best_match(Config.LANGUAGES)
 
 @app.route('/')
 def home() -> str:
     """ The home route for the application """
-    return flask.render_template('2-index.html')
+    home_title = gettext('home_title')
+    home_header = gettext('home_header')
+    data = {
+        "home_header": home_header,
+        "home_title": home_title,
+    }
+
+    return flask.render_template('3-index.html', **data)
 
 
 if __name__ == "__main__":

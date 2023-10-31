@@ -19,7 +19,7 @@ babel = Babel(app)
 @app.route('/')
 def home() -> str:
     """ The home route for the application """
-    return flask.render_template('0-index.html')
+    return flask.render_template('1-index.html')
 
 
 if __name__ == "__main__":
