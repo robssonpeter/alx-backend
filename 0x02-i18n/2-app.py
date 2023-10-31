@@ -21,6 +21,7 @@ babel = Babel(app)
 
 @babel.localeselector
 def get_locale() -> Union[str, None]:
+    """ The function to return the best match of the lang """
     return request.accept_languages.best_match(Config.LANGUAGES)
 
 @app.route('/')
