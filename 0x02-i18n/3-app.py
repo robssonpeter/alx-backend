@@ -4,12 +4,12 @@ import flask
 from flask_babel import Babel, gettext
 from flask import request
 from typing import Union
-import jinja2
 
 """ The entry file for the web application """
 
 
 app = Flask(__name__, template_folder="templates/")
+
 
 class Config:
     LANGUAGES = ["en", "fr"]
@@ -20,10 +20,12 @@ class Config:
 app.config.from_object(Config)
 babel = Babel(app)
 
+
 @babel.localeselector
 def get_locale() -> Union[str, None]:
     """ The function to return the best match of the lang """
     return request.accept_languages.best_match(Config.LANGUAGES)
+
 
 @app.route('/')
 def home() -> str:
