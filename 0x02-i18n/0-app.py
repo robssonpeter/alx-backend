@@ -9,7 +9,7 @@ app = Flask(__name__, template_folder="templates/")
 @app.route('/')
 def home() -> str:
     """ The home route for the application """
-    return flask.render_template('0-index.html', name="Jackson")
+    return flask.render_template('0-index.html')
 
 
 if __name__ == "__main__":
