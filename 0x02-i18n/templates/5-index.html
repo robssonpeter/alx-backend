@@ -1,0 +1,13 @@
+<html>
+    <head>
+        <title>{{ _('home_title') }}</title>
+    </head>
+    <body>
+        <h1>{{ _('home_header') }}now</h1>
+        {% if logged_in_as %}
+        <span>{{ _('logged_in_as', username=logged_in_as.name) }}</span>
+        {% else %}
+        <span>{{ _('not_logged_in') }}</span>
+        {% endif %}
+    </body>
+</html>
