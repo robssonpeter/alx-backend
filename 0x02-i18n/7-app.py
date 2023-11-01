@@ -5,6 +5,7 @@ import flask
 from flask_babel import Babel, gettext
 from flask import request
 from typing import Union
+import pytz
 
 
 app = Flask(__name__, template_folder="templates/")
@@ -39,6 +40,24 @@ def get_user(user_id=None) -> dict:
     elif id in keys:
         return users[id]
 
+
+@babel.timezoneselector
+def get_timezone():
+    user = flask.g.get('user')
+    timezone = request.args.get('timezone', default=None)
+    def process_timezone(timezone):
+        try:
+            pytz.timezone('timezone')
+            return timezone
+        except pytz.exceptions.UnknownTimeZoneError:
+            return pytz.utc
+    if timezone:
+        return process_timezone(timezone)
+    elif user:
+        return process_timezone(user['timezone'])
+
+    """ The function to return the best match of the lang """
+    return "UTC"
 
 @app.before_request
 def before_request():
