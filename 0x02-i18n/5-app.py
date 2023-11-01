@@ -23,7 +23,11 @@ users = {
             1: {"name": "Balou", "locale": "fr", "timezone": "Europe/Paris"},
             2: {"name": "Beyonce", "locale": "en", "timezone": "US/Central"},
             3: {"name": "Spock", "locale": "kg", "timezone": "Vulcan"},
-            4: {"name": "Teletubby", "locale": None, "timezone": "Europe/London"},
+            4: {
+                "name": "Teletubby",
+                "locale": None,
+                "timezone": "Europe/London"
+                },
         }
 
 
@@ -34,7 +38,7 @@ def get_user(user_id=None) -> dict:
         return None
     elif id in keys:
         return users[id]
-    
+
 
 @app.before_request
 def before_request():
@@ -42,6 +46,7 @@ def before_request():
     user_id = int(login_as) if login_as is not None else None
     user = get_user(user_id)
     flask.g.user = user
+
 
 @babel.localeselector
 def get_locale() -> Union[str, None]:
@@ -54,7 +59,7 @@ def get_locale() -> Union[str, None]:
 
 @app.route('/')
 def home() -> str:
-    
+
     """ The home route for the application """
     home_title = gettext('home_title')
     home_header = gettext('home_header')
