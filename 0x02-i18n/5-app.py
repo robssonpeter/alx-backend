@@ -19,6 +19,29 @@ class Config:
 app.config.from_object(Config)
 babel = Babel(app)
 
+users = {
+            1: {"name": "Balou", "locale": "fr", "timezone": "Europe/Paris"},
+            2: {"name": "Beyonce", "locale": "en", "timezone": "US/Central"},
+            3: {"name": "Spock", "locale": "kg", "timezone": "Vulcan"},
+            4: {"name": "Teletubby", "locale": None, "timezone": "Europe/London"},
+        }
+
+
+def get_user(user_id=None) -> dict:
+    keys = list(users.keys())
+    id = int(user_id)
+    if user_id is None or id not in keys:
+        return None
+    elif id in keys:
+        return users[id]
+    
+
+@app.before_request
+def before_request():
+    login_as = request.args.get('login_as')
+    user_id = int(login_as) if login_as is not None else None
+    user = get_user(user_id)
+    flask.g.user = user
 
 @babel.localeselector
 def get_locale() -> Union[str, None]:
@@ -31,12 +54,7 @@ def get_locale() -> Union[str, None]:
 
 @app.route('/')
 def home() -> str:
-    users = {
-        1: {"name": "Balou", "locale": "fr", "timezone": "Europe/Paris"},
-        2: {"name": "Beyonce", "locale": "en", "timezone": "US/Central"},
-        3: {"name": "Spock", "locale": "kg", "timezone": "Vulcan"},
-        4: {"name": "Teletubby", "locale": None, "timezone": "Europe/London"},
-    }
+    
     """ The home route for the application """
     home_title = gettext('home_title')
     home_header = gettext('home_header')
@@ -47,8 +65,8 @@ def home() -> str:
         "home_title": home_title,
     }
     login_as = request.args.get('login_as')
-    keys = list(users.keys())
-    if login_as and int(login_as) in keys:
+    current_user = flask.g.get('user')
+    if current_user:
         data['logged_in_as'] = users[int(login_as)]
     else:
         data["not_logged_id"] = not_logged_in
